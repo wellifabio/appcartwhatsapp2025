@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     //Global
     container: {
         flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "stretch",
+        justifyContent: "center",
+        alignItems: "center",
         backgroundColor: color.c1,
     },
     text: {
@@ -18,7 +18,6 @@ export const styles = StyleSheet.create({
         color: color.c5,
         fontSize: 24,
         fontWeight: "bold",
-        textAlign: 'center',
     },
     subtitle: {
         color: color.c5,
@@ -100,7 +99,7 @@ export const styles = StyleSheet.create({
     //Listas
     list: {
         width: '100%',
-        flex: 1,
+        height: '100%',
         padding: 10,
         marginBottom: 12,
     },
@@ -122,7 +121,7 @@ export const styles = StyleSheet.create({
         width: 50,
         height: 50,
         margin: 5,
-        borderRadius: 25,
+        borderRadius: "50%",
     },
 
     //Categorias
