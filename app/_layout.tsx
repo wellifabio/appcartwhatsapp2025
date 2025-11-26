@@ -1,24 +1,52 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router, Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { Button, Image, View } from "react-native";
+import Color from "./root/color";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const [nomeUsuario, setNomeUsuario] = useState<string>("Aguardando...");
+  const [avatarUsuario, setAvatarUsuario] = useState<string>("");
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  useEffect(() => {
+    obterDadosUsuario();
+    const interval = setInterval(obterDadosUsuario, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const obterDadosUsuario = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setNomeUsuario(user.nome);
+      setAvatarUsuario(user.avatar);
+    }
+  };
+
+  const sair = () => {
+    AsyncStorage.removeItem("user");
+    router.replace("/");
+  };
+
+  return <Stack>
+    <Stack.Screen name="index" options={{ headerShown: false }} />
+    <Stack.Screen name="screens" options={{
+      title: nomeUsuario,
+      headerLeft: () => (
+        <Image
+          source={{ uri: `https://raw.githubusercontent.com/wellifabio/senai2025/refs/heads/main/assets/avatares/${avatarUsuario}` }}
+          style={{ width: 40, height: 40, borderRadius: 20, margin: 10 }}
+        />
+      ),
+
+      headerRight: () => (
+        <View style={{ marginRight: 10 }}>
+          <Button
+            color={Color.c1}
+            title="Sair"
+            onPress={sair}
+          />
+        </View>)
+    }} />
+  </Stack>;
 }
