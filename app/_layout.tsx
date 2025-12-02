@@ -34,7 +34,7 @@ export default function RootLayout() {
       title: nomeUsuario,
       headerLeft: () => (
         <Image
-          source={{ uri: `https://raw.githubusercontent.com/wellifabio/senai2025/refs/heads/main/assets/avatares/${avatarUsuario}` }}
+          source={{ uri: avatarUsuario }}
           style={{ width: 40, height: 40, borderRadius: 20, margin: 10 }}
         />
       ),

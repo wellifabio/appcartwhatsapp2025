@@ -11,10 +11,11 @@ type Props = {
     categoria?: string;
     estoque?: number;
     preco?: number;
+    acao?: string;
     onAdd: () => void;
 };
 
-export default function DetalhesModal({ visible, onClose, nome, imagem, descricao, categoria, estoque, preco, onAdd }: Props) {
+export default function DetalhesModal({ visible, onClose, nome, imagem, descricao, categoria, estoque, preco, acao, onAdd }: Props) {
     return (
         <Modal
             visible={visible}
@@ -25,7 +26,7 @@ export default function DetalhesModal({ visible, onClose, nome, imagem, descrica
             <View style={styles.modalOverlay}>
                 <View style={styles.modalBox}>
                     {nome ? <Text style={styles.modalTitle}>{nome}</Text> : null}
-                    {imagem ? <Image source={{ uri: `https://raw.githubusercontent.com/wellifabio/senai2025/main/assets/produtos/${imagem}` }} style={styles.modalImage} /> : null}
+                    {imagem ? <Image source={{ uri: imagem }} style={styles.modalImage} /> : null}
                     <Text style={styles.modalText}>{descricao}</Text>
                     <View style={styles.linha}>
                         <Text style={styles.modalText}>Categoria:</Text>
@@ -44,7 +45,7 @@ export default function DetalhesModal({ visible, onClose, nome, imagem, descrica
                             <Text style={styles.textButton}>Fechar</Text>
                         </Pressable>
                         <Pressable style={styles.modalClose} onPress={onAdd}>
-                            <Text style={styles.textButton}>Adicionar ao carrinho</Text>
+                            <Text style={styles.textButton}>{acao ?? "Adicionar ao carrinho"}</Text>
                         </Pressable>
                     </View>
                 </View>

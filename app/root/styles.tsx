@@ -150,4 +150,37 @@ export const styles = StyleSheet.create({
     categoryButtonTextActive: {
         color: color.c1,
     },
+
+    //Carrinho
+    quantityContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 5,
+    },
+    leattleButton: {
+        backgroundColor: color.c4,
+        padding: 5,
+        borderRadius: 5,
+        alignItems: "center",
+    },
+    totalContainer: {
+        padding: 15,
+        borderTopColor: color.c3,
+        borderTopWidth: 1,
+        width: '100%',
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    totalText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: color.c5,
+    },
+    direita: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-end",
+    },
 });

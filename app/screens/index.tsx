@@ -1,7 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { router } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import DetalhesModal from "../components/DetalhesModal";
+import Api from "../root/api";
 import { styles } from "../root/styles";
 
 export default function Index() {
@@ -17,6 +20,16 @@ export default function Index() {
     carregarSequencia();
   }, []);
 
+  useEffect(() => {
+    carregarSequencia();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      carregarSequencia();
+    }, [])
+  );
+
   async function carregarSequencia() {
     const prods = await fetchProdutos();
     await getCart(prods);
@@ -24,7 +37,7 @@ export default function Index() {
 
   async function fetchProdutos() {
     try {
-      const response = await fetch("https://raw.githubusercontent.com/wellifabio/senai2025/main/assets/mockups/produtos.json");
+      const response = await fetch(Api.BASE_URL + Api.PRODUCTS_ENDPOINT);
       const data = await response.json();
       const withAtivo = data.map((p: any) => ({ ...p, ativo: true }));
       setProdutos(withAtivo);
@@ -79,6 +92,7 @@ export default function Index() {
     setProdutos([...produtos]);
     await saveCart(updatedCart);
     setModalVisible(false);
+    router.replace("/screens/carrinho");
   }
 
   async function saveCart(cart?: typeof carrinho) {
@@ -136,7 +150,7 @@ export default function Index() {
           <View style={styles.listItem}>
             <View style={styles.linha}>
               <Image
-                source={{ uri: `https://raw.githubusercontent.com/wellifabio/senai2025/main/assets/produtos/${item.imagem}` }}
+                source={{ uri: item.imagem }}
                 style={styles.listImg}
               />
               <View style={styles.listInfo}>

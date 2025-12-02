@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import MessageModal from "./components/MessageModal";
 import { styles } from "./root/styles";
+import Api from "./root/api";
 
 export default function Index() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -18,7 +19,7 @@ export default function Index() {
 
   async function fetchUsers() {
     try {
-      const response = await fetch("https://raw.githubusercontent.com/wellifabio/senai2025/refs/heads/main/assets/mockups/usuarios.json");
+      const response = await fetch(Api.BASE_URL + Api.USERS_ENDPOINT);
       const data = await response.json();
       setUsers(data);
     } catch (error) {
